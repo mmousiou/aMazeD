@@ -27,18 +27,23 @@ goog.require('Maze.soy');
 
 BlocklyGames.NAME = 'maze';
 
+//Το παιχνίδι έχει 6 επίπεδα
+
+
 /**
  * Go to the next level.  Add skin parameter.
  * @suppress {duplicate}
  */
+
+//άλλαξα το nextLevel για να σε στέλντει μετά το 6ο level στο turtle, αφαίρεσα από παντού το BocklyGames.maxlevel 
 BlocklyInterface.nextLevel = function() {
-    if (BlocklyGames.LEVEL < BlocklyGames.MAX_LEVEL) {
+    if (BlocklyGames.LEVEL < 6) {
         window.location = window.location.protocol + '//' +
             window.location.host + window.location.pathname +
             '?lang=' + BlocklyGames.LANG + '&level=' + (BlocklyGames.LEVEL + 1) +
             '&skin=' + Maze.SKIN_ID;
-    } else {
-        BlocklyInterface.indexPage();
+    } else if (BlocklyGames.LEVEL == 6) {
+        BlocklyInterface.turtlePage();
     }
 };
 
@@ -103,13 +108,13 @@ Maze.SKIN = Maze.SKINS[Maze.SKIN_ID];
 
 //για να επιλεχθεί το σωστό level-skin στο όταν φορτώνει
 
-for (var i = 0; i < BlocklyGames.MAX_LEVEL; i++) {
+for (var i = 0; i < 6; i++) {
     if (!BlocklyGames.loadFromLocalStorage(BlocklyGames.NAME, i + 1)) {
         BlocklyGames.LEVEL = i + 1;
         break;
         // αν και το τελευταίο επίπεδο έχει ολοκληρωθεί τότε θα εμφανιστεί μήνυμα ολοκλήρωσης παιχνιδιού (ο κώδικας είναι εκτός της συνάρτησης στο if για τις οδηγίες του τελευταίου επιπέδου) , αν δεν βάλουμε τη συνθήκη που ακολουθεί πέφτει σε λούπα
-    } else if (!!BlocklyGames.loadFromLocalStorage(BlocklyGames.NAME, BlocklyGames.MAX_LEVEL)) {
-        BlocklyGames.LEVEL = BlocklyGames.MAX_LEVEL;
+    } else if (!!BlocklyGames.loadFromLocalStorage(BlocklyGames.NAME, 6)) {
+        BlocklyGames.LEVEL = 6;
     }
 }
 
@@ -209,17 +214,6 @@ Maze.map = [
         [0, 0, 0, 0, 1, 0, 0, 0],
         [2, 1, 1, 1, 1, 0, 0, 0]
     ],
-    // Level 7.
-    [
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 2, 1, 1, 1, 1, 3, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0]
-    ],
 ][BlocklyGames.LEVEL];
 
 /**
@@ -284,13 +278,6 @@ Maze.levelData = [{
         result: "",
         score: 0,
     },
-    {
-        name: "Επίπεδο 7",
-        countPlay: 0,
-        time: "0",
-        result: "",
-        score: 0,
-    }
 ];
 
 var totalScore = 0;
@@ -508,7 +495,7 @@ Maze.init = function() {
     document.body.innerHTML = Maze.soy.start({}, null, {
         lang: BlocklyGames.LANG,
         level: BlocklyGames.LEVEL,
-        maxLevel: 7,
+        maxLevel: 10,
         skin: Maze.SKIN_ID,
         html: BlocklyGames.IS_HTML
     });
@@ -533,7 +520,7 @@ Maze.init = function() {
     var data4 = JSON.parse(window.localStorage.getItem("maze_level4"));
     var data5 = JSON.parse(window.localStorage.getItem("maze_level5"));
     var data6 = JSON.parse(window.localStorage.getItem("maze_level6"));
-    var data7 = JSON.parse(window.localStorage.getItem("maze_level7"));
+
 
     if (data1) Maze.levelData[0] = data1;
     if (data2) Maze.levelData[1] = data2;
@@ -541,11 +528,11 @@ Maze.init = function() {
     if (data4) Maze.levelData[3] = data4;
     if (data5) Maze.levelData[4] = data5;
     if (data6) Maze.levelData[5] = data6;
-    if (data7) Maze.levelData[6] = data7;
+
 
     console.log(Maze.levelData);
     totalScore = Maze.levelData[0].score +
-        Maze.levelData[1].score + Maze.levelData[2].score + Maze.levelData[3].score + Maze.levelData[4].score + Maze.levelData[5].score + Maze.levelData[6].score;
+        Maze.levelData[1].score + Maze.levelData[2].score + Maze.levelData[3].score + Maze.levelData[4].score + Maze.levelData[5].score;
     window.localStorage.setItem('total-score', totalScore);
     document.querySelector(".outcome__value--total__score").textContent = window.localStorage.getItem('total-score');
 
@@ -613,6 +600,184 @@ Maze.init = function() {
         'turnRight,turnLeft,isPathForward,isPathRight,isPathBackward,isPathLeft');
 
     Maze.drawMap();
+
+    // για να εμφανίσω τα κατάλληλα blocks
+
+    //level 1
+
+    var defaultXml1 =
+        '<xml>' +
+        '<block ' + 'type="maze_moveForward" x="70" y="70">' +
+        '<next>' +
+        '<block ' +
+        'type="maze_turn" >' +
+        '<next>' +
+        '<block ' + 'type="maze_moveForward" >' +
+        '<next>' +
+        '<block ' + 'type="maze_moveForward" >' +
+        '<next>' +
+        '<block ' + 'type="maze_turn" >' +
+        '<next>' +
+        '<block ' + 'type="maze_moveForward" >' + '</block>' +
+        '</next>' + //τέλος 6ου block
+        '</block>' +
+        '</next>' + //τέλος 5ου block
+        '</block>' +
+        '</next>' + //τέλος 4ου block
+        '</block>' +
+        '</next>' + //τέλος 3ου block
+        '</block>' + '</next>' + //τέλος 2oυ block
+        '</block>' + // τέλος πρώτου block 
+        '</xml>';
+
+
+    //level 2
+
+    var defaultXml2 =
+        '<xml>' +
+        '<block type="maze_forever" x="70" y="70">' +
+        '<statement name="DO">' +
+        ' <block type="maze_turn"><field name="DIR">turnRight</field>' +
+        '<next>' +
+        ' <block type="maze_moveForward">' +
+        '<next>' +
+        ' <block type="maze_moveForward">' +
+        '<next>' +
+        '<block type="maze_turn">' +
+        '<next>' +
+        ' <block type="maze_moveForward">' +
+        '</block>' + //end last block
+        '</next>' +
+        '</block>' + //end 4th block
+        '</next>' +
+        '</block>' + //end 3rd block
+        '</next>' +
+        '</block>' + //end 2nd block
+        '</next>' +
+        '</block>' + //end 1st block
+        '</statement>' +
+        '</block>' + //end maze_forever
+        '</xml>';
+
+    //level 3
+
+    var defaultXml3 =
+        '<xml>' +
+        '<block type="controls_repeat_ext" x="70" y="70">' +
+        ' <statement name="DO">' +
+        '<block type="controls_repeat_ext" >' + //εσωτερικό repeat
+        '<statement name="DO">' +
+        ' <block type="maze_moveForward">' +
+        '</block>' +
+        ' </statement>' +
+        '<next>' +
+        '<block type="maze_turn"><field name="DIR">turnRight</field>' +
+        '</block>' +
+        '</next>' +
+        '</block>' + //end internal repeat
+        '</statement>' +
+        '<next>' +
+        '<block ' + 'type="maze_moveForward" >' + '</block>' +
+        '</next>' +
+        '</block>' + //end external repeat
+        '</xml>';
+
+
+
+
+    //level 4
+
+    var defaultXml4 =
+        '<xml>' +
+        '<block type="maze_forever" x="70" y="70">' +
+        '<statement name="DO">' +
+        ' <block type="maze_moveForward">' +
+        '<next>' +
+        '<block type="maze_if"><field name="DIR">isPathRight</field>' +
+        '<statement name="DO">' +
+        '</statement>' +
+        '</block>' + //end last block
+        '</next>' +
+        '</block>' + //end maze_moveForward
+        '</statement>' +
+        '</block>' + //end maze_forever
+        '</xml>';
+
+    //level 5
+
+    var defaultXml5 =
+        '<xml>' +
+        '<block type="maze_forever" x="70" y="70">' +
+        '<statement name="DO">' +
+        ' <block type="maze_moveForward">' +
+        '<next>' +
+        ' <block type="maze_if"><field name="DIR">isPathLeft</field>' +
+        '<statement name="DO">' +
+        ' <block type="maze_turn">' +
+        '</block>' + //end 2nd block
+        '</statement>' +
+        '<next>' +
+        ' <block type="maze_if"><field name="DIR">isPathRight</field>' +
+        '<statement name="DO">' +
+        ' <block type="maze_moveForward">' +
+        '</block>' + //end last block
+        '</statement>' +
+        '</block>' + //end internal if_path
+        '</next>' +
+        '</block>' + //end external if_path
+        '</next>' +
+        '</block>' + //end 1st block
+        '</statement>' +
+        '</block>' + //end maze_forever
+        '</xml>';
+
+    //level 6 
+
+    var defaultXml6 =
+        '<xml>' +
+        '<block type="maze_forever" x="70" y="70">' +
+        '<statement name="DO">' +
+        ' <block type="maze_ifElse">' +
+        '<statement name="DO">' +
+        ' <block type="maze_moveForward">' +
+        '</block>' + //end 1st block
+        '</statement>' + //end do-statement
+        '<statement name="ELSE">' +
+        ' <block type="maze_ifElse"><field name="DIR">isPathRight</field>' +
+        '<statement name="DO">' +
+        '<block type="maze_turn"><field name="DIR">turnRight</field> ' +
+        '</block>' + //end block
+        '</statement>' + //end do-statement
+        '<statement name="ELSE">' +
+        '</statement>' +
+        '</block>' +
+        '</statement>' + //end else-statement
+        '</block>' + //end external ifElse_path
+        '</statement>' +
+        '</block>' + //end maze_forever
+        '</xml>';
+
+    // δημιουργία workspace
+
+    if (BlocklyGames.LEVEL == 1) {
+        BlocklyInterface.loadBlocks(defaultXml1, false);
+    }
+    if (BlocklyGames.LEVEL == 2) {
+        BlocklyInterface.loadBlocks(defaultXml2, false);
+    }
+    if (BlocklyGames.LEVEL == 3) {
+        BlocklyInterface.loadBlocks(defaultXml3, false);
+    }
+    if (BlocklyGames.LEVEL == 4) {
+        BlocklyInterface.loadBlocks(defaultXml4, false);
+    }
+    if (BlocklyGames.LEVEL == 5) {
+        BlocklyInterface.loadBlocks(defaultXml5, false);
+    }
+    if (BlocklyGames.LEVEL == 6) {
+        BlocklyInterface.loadBlocks(defaultXml6, false);
+    }
+
 
 
     // Locate the start and finish squares.
@@ -700,37 +865,30 @@ Maze.init = function() {
             // Level 10 gets an introductory modal dialog.
             // Skip the dialog if the user has already won.
             document.querySelector(".header-help").textContent = document.getElementById('dialogHelpLevel6').textContent;
-        }
-    }
-    if (BlocklyGames.LEVEL == 7) {
-        if (!BlocklyGames.loadFromLocalStorage(BlocklyGames.NAME,
-                BlocklyGames.LEVEL)) {
-            // Level 10 gets an introductory modal dialog.
-            // Skip the dialog if the user has already won.
-            document.querySelector(".header-help").textContent = document.getElementById('dialogHelpLevel7').textContent;
         } else {
-            //εντολή else για τελευταίο επίπεδο! 
-            var content = document.getElementById('dialogMazeDone');
-            var style = {
-                'width': '30%',
-                'left': '35%',
-                'top': '12em'
-            };
-            BlocklyDialogs.showDialog(content, null, false, true, style,
-                BlocklyDialogs.stopDialogKeyDown);
-            BlocklyDialogs.startDialogKeyDown();
-            //περίμενε 5 δευτερόλεπτα και άλλαξε level
-            setTimeout(BlocklyInterface.indexPage, 3000);
+            // //εντολή else για τελευταίο επίπεδο! 
+            // var content = document.getElementById('dialogMazeDone');
+            // var style = {
+            //     'width': '30%',
+            //     'left': '35%',
+            //     'top': '12em'
+            // };
+            // BlocklyDialogs.showDialog(content, null, false, true, style,
+            //     BlocklyDialogs.stopDialogKeyDown);
+            // BlocklyDialogs.startDialogKeyDown();
+            // //περίμενε 1 δευτερόλεπτα και άλλαξε level
+            setTimeout(BlocklyInterface.turtlePage, 1000);
         }
     }
+
     //======================================================================================================
 
     // Περιμένουμε 5 δευτερόλεπτα για το maze level help
     //All other levels get interactive help.  But wait 5 seconds for the
     // user to think a bit before they are told what to do.
     setTimeout(function() {
-        BlocklyInterface.workspace.addChangeListener(Maze.levelHelp);
-        Maze.levelHelp();
+        BlocklyInterface.workspace.addChangeListener(Maze.introHelp);
+        Maze.introHelp();
     }, 2000);
 
 
@@ -749,12 +907,183 @@ Maze.init = function() {
     BlocklyInterface.importPrettify();
 };
 
+
+/**
+ * When the workspace changes, update the help as needed.
+ * @param {Blockly.Events.Abstract=} opt_event Custom data for event.
+ */
+Maze.introHelp = function(opt_event) {
+    if (opt_event && opt_event.isUiEvent) {
+        // Just a change to highlighting or somesuch.
+        return;
+    } else if (BlocklyInterface.workspace.isDragging()) {
+        // Don't change helps during drags.
+        return;
+    } else if (Maze.result == Maze.ResultType.SUCCESS ||
+        BlocklyGames.loadFromLocalStorage(BlocklyGames.NAME,
+            BlocklyGames.LEVEL)) {
+        // The user has already won.  They are just playing around.
+        return;
+    }
+    var rtl = BlocklyGames.isRtl();
+    var userBlocks = Blockly.Xml.domToText(
+        Blockly.Xml.workspaceToDom(BlocklyInterface.workspace));
+    var toolbar = BlocklyInterface.workspace.flyout_.workspace_.getTopBlocks(true);
+    var content = null;
+    var origin = null;
+    var style = null;
+
+    if (BlocklyGames.LEVEL == 1) {
+        //μήνυμα στην αρχή του level 
+        if (Maze.levelData[0].countPlay == 0) {
+            content = document.getElementById('dialogHelpStack');
+            style = { 'width': '350px', 'top': '400px' };
+            style[rtl ? 'right' : 'left'] = '600px';
+            origin = toolbar[0].getSvgRoot();
+        }
+    } else if (BlocklyGames.LEVEL == 2) {
+        //μήνυμα στην αρχή του level 
+        if (Maze.levelData[1].countPlay == 0) {
+            content = document.getElementById('dialogHelpPlay21');
+            style = { 'width': '350px', 'top': '400px' };
+            style[rtl ? 'right' : 'left'] = '600px';
+            origin = toolbar[0].getSvgRoot();
+        }
+    }
+
+    if (content) {
+        if (content.parentNode != document.getElementById('dialog')) {
+            BlocklyDialogs.showDialog(content, origin, true, false, style, null);
+        }
+    } else {
+        BlocklyDialogs.hideDialog(false);
+    }
+};
+
 /**
  * When the workspace changes, update the help as needed.
  * @param {Blockly.Events.Abstract=} opt_event Custom data for event.
  */
 Maze.levelHelp = function(opt_event) {
+    if (opt_event && opt_event.isUiEvent) {
+        // Just a change to highlighting or somesuch.
+        return;
+    } else if (BlocklyInterface.workspace.isDragging()) {
+        // Don't change helps during drags.
+        return;
+    } else if (Maze.result == Maze.ResultType.SUCCESS ||
+        BlocklyGames.loadFromLocalStorage(BlocklyGames.NAME,
+            BlocklyGames.LEVEL)) {
+        // The user has already won.  They are just playing around.
+        return;
+    }
+    var rtl = BlocklyGames.isRtl();
+    var userBlocks = Blockly.Xml.domToText(
+        Blockly.Xml.workspaceToDom(BlocklyInterface.workspace));
+    var toolbar = BlocklyInterface.workspace.flyout_.workspace_.getTopBlocks(true);
+    var content = null;
+    var origin = null;
+    var style = null;
 
+    if (BlocklyGames.LEVEL == 1) {
+        //αν το κουμπί play πατήθηκε μια φορά εμφάνισε μήνυμα
+        if (Maze.result != Maze.ResultType.UNSET) {
+            if (Maze.levelData[0].countPlay == 1) {
+                content = document.getElementById('dialogHelpPlay11');
+                style = { 'width': '350px', 'top': '400px' };
+                style[rtl ? 'right' : 'left'] = '600px';
+                origin = toolbar[1].getSvgRoot();
+            } else if (Maze.levelData[0].countPlay > 1) {
+                content = document.getElementById('dialogHelpPlay12');
+                style = { 'width': '350px', 'top': '400px' };
+                style[rtl ? 'right' : 'left'] = '600px';
+                origin = toolbar[1].getSvgRoot();
+            }
+        }
+    } else if (BlocklyGames.LEVEL == 2) {
+        //αν το κουμπί play πατήθηκε 2 φορές και πάνω εμφάνισε μήνυμα
+        if (Maze.result != Maze.ResultType.UNSET) {
+            if (Maze.levelData[1].countPlay > 0) {
+                content = document.getElementById('dialogHelpPlay22');
+                style = { 'width': '350px', 'top': '400px' };
+                style[rtl ? 'right' : 'left'] = '600px';
+                origin = toolbar[1].getSvgRoot();
+            }
+        }
+    } else if (BlocklyGames.LEVEL == 3) {
+        //μήνυμα στην αρχή του level 
+        if (Maze.levelData[2].countPlay == 1) {
+            content = document.getElementById('dialogHelpPlay31');
+            style = { 'width': '350px', 'top': '400px' };
+            style[rtl ? 'right' : 'left'] = '600px';
+            origin = toolbar[0].getSvgRoot();
+        }
+        //αν το κουμπί play πατήθηκε 2 φορές και πάνω εμφάνισε μήνυμα
+        if (Maze.result != Maze.ResultType.UNSET) {
+            if (Maze.levelData[2].countPlay > 1) {
+                content = document.getElementById('dialogHelpPlay32');
+                style = { 'width': '400px', 'top': '400px' };
+                style[rtl ? 'right' : 'left'] = '600px';
+                origin = toolbar[1].getSvgRoot();
+            }
+        }
+    } else if (BlocklyGames.LEVEL == 4) {
+        //αν το κουμπί play πατήθηκε 1 φορά και πάνω εμφάνισε μήνυμα
+        if (Maze.result != Maze.ResultType.UNSET) {
+            if (Maze.levelData[3].countPlay == 1) {
+                content = document.getElementById('dialogHelpPlay41');
+                style = { 'width': '350px', 'top': '400px' };
+                style[rtl ? 'right' : 'left'] = '600px';
+                origin = toolbar[1].getSvgRoot();
+                //αν το κουμπί play πατήθηκε 2 φορές και πάνω εμφάνισε μήνυμα
+            } else if (Maze.levelData[3].countPlay > 1) {
+                content = document.getElementById('dialogHelpPlay42');
+                style = { 'width': '350px', 'top': '400px' };
+                style[rtl ? 'right' : 'left'] = '600px';
+                origin = toolbar[1].getSvgRoot();
+            }
+        }
+    } else if (BlocklyGames.LEVEL == 5) {
+        //αν το κουμπί play πατήθηκε 1 φορά και πάνω εμφάνισε μήνυμα
+        if (Maze.result != Maze.ResultType.UNSET) {
+            if (Maze.levelData[4].countPlay == 1) {
+                content = document.getElementById('dialogHelpPlay51');
+                style = { 'width': '400px', 'top': '400px' };
+                style[rtl ? 'right' : 'left'] = '600px';
+                origin = toolbar[1].getSvgRoot();
+                //αν το κουμπί play πατήθηκε 2 φορές και πάνω εμφάνισε μήνυμα
+            } else if (Maze.levelData[4].countPlay > 1) {
+                content = document.getElementById('dialogHelpPlay52');
+                style = { 'width': '350px', 'top': '400px' };
+                style[rtl ? 'right' : 'left'] = '600px';
+                origin = toolbar[1].getSvgRoot();
+            }
+        }
+    } else if (BlocklyGames.LEVEL == 6) {
+        //αν το κουμπί play πατήθηκε 1 φορά και πάνω εμφάνισε μήνυμα
+        if (Maze.result != Maze.ResultType.UNSET) {
+            if (Maze.levelData[5].countPlay == 1) {
+                content = document.getElementById('dialogHelpPlay61');
+                style = { 'width': '400px', 'top': '400px' };
+                style[rtl ? 'right' : 'left'] = '600px';
+                origin = toolbar[1].getSvgRoot();
+                //αν το κουμπί play πατήθηκε 2 φορές και πάνω εμφάνισε μήνυμα
+            } else if (Maze.levelData[5].countPlay > 1) {
+                content = document.getElementById('dialogHelpPlay62');
+                style = { 'width': '350px', 'top': '400px' };
+                style[rtl ? 'right' : 'left'] = '600px';
+                origin = toolbar[1].getSvgRoot();
+            }
+        }
+    }
+
+    if (content) {
+        if (content.parentNode != document.getElementById('dialog')) {
+            BlocklyDialogs.showDialog(content, origin, true, false, style, null);
+        }
+    } else {
+        BlocklyDialogs.hideDialog(false);
+    }
 };
 
 
@@ -879,21 +1208,13 @@ Maze.runButtonClick = function(e) {
     // 
 
     Maze.levelData[BlocklyGames.LEVEL - 1].countPlay += 1;
-    document.querySelector(".outcome__value--play").textContent = Maze.levelData[i].countPlay;
+    document.querySelector(".outcome__value--play").textContent = Maze.levelData[BlocklyGames.LEVEL - 1].countPlay;
 
 
     console.log(Maze.levelData);
 
     BlocklyDialogs.hideDialog(false);
-    // Only allow a single top block on level 1.
-    if (BlocklyGames.LEVEL == 1 &&
-        BlocklyInterface.workspace.getTopBlocks(false).length > 1 &&
-        Maze.result != Maze.ResultType.SUCCESS &&
-        !BlocklyGames.loadFromLocalStorage(BlocklyGames.NAME,
-            BlocklyGames.LEVEL)) {
-        Maze.levelHelp();
-        return;
-    }
+
     var runButton = document.getElementById('runButton');
     var resetButton = document.getElementById('resetButton');
     // Ensure that Reset button is at least as wide as Run button.
@@ -921,15 +1242,8 @@ Maze.submitButtonClick = function(e) {
         Maze.levelData[BlocklyGames.LEVEL - 1].time = document.getElementById('capacity').textContent;
         console.log(Maze.levelData[BlocklyGames.LEVEL - 1]);
     }
-    // Only allow a single top block on level 1.
-    if (BlocklyGames.LEVEL == 1 &&
-        BlocklyInterface.workspace.getTopBlocks(false).length > 1 &&
-        Maze.result != Maze.ResultType.SUCCESS &&
-        !BlocklyGames.loadFromLocalStorage(BlocklyGames.NAME,
-            BlocklyGames.LEVEL)) {
-        Maze.levelHelp();
-        return;
-    }
+
+
     var runButton = document.getElementById('runButton');
     var resetButton = document.getElementById('resetButton');
     var submitButton = document.getElementById('submitButton');
@@ -978,6 +1292,7 @@ Maze.resetButtonClick = function(e) {
     runButton.style.display = 'inline';
     document.getElementById('resetButton').style.display = 'inline'; //changed from none
     BlocklyInterface.workspace.highlightBlock(null);
+    Maze.levelHelp();
     Maze.reset(false);
 };
 
@@ -1181,7 +1496,6 @@ Maze.animate = function() {
     var action = Maze.log.shift();
     if (!action) {
         BlocklyInterface.highlight(null);
-        Maze.levelHelp();
         return;
     }
     BlocklyInterface.highlight(action[1]);
