@@ -1,4 +1,5 @@
 ![aMazed](/appengine/images/logo_amazed.png) 
+<img src="/appengine/images/logo_amazed.png" width="200">
 # This game is based on Blockly Games maze and turtle. 
 *Version 1 --help provided in each level.*
 
