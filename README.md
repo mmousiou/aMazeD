@@ -23,8 +23,8 @@ wsl
 game.
 
 ## Sample
-**aMazeD with no help!**
-(https://mazenocomments.000webhostapp.com/index.html)
+**aMazeD with help!**
+https://mazegamemm.000webhostapp.com/index.html
 
 ## Original games:
 
