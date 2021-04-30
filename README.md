@@ -22,7 +22,7 @@ you must have the **Ubuntu app** on your computer and before the above commands 
 have to run the command 
 
 
-**wsl**
+- **wsl**
 
 
 (to initiate linux subsystem on windows) on the file directory containing the game.
