@@ -9,7 +9,9 @@ You can play the game locally or change the code.  First you must run the comman
 
 
 -**make deps**
+
 -**make maze** (or make make-en only for english version)
+
 -**make turtle** (or make turtle-en only for english version)
 
 
