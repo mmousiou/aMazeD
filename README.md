@@ -8,11 +8,11 @@
 You can play the game locally or change the code.  First you must run the commands: 
 
 
--**make deps**
+- **make deps**
 
--**make maze** (or make make-en only for english version)
+- **make maze** (or make make-en only for english version)
 
--**make turtle** (or make turtle-en only for english version)
+- **make turtle** (or make turtle-en only for english version)
 
 
 on your cmd in the file directory (in which you unzipped the file) in order to built your version.
