@@ -1,12 +1,15 @@
-This game is based on Blockly Games maze. Languages: English, Greek .
+![aMazed](/appengine/images/logo_amazed.png) 
+# This game is based on Blockly Games maze and turtle. Version 2 --no help provided.
 
-You can play the game locally and if you wish to change the code you can run
+Languages: English, Greek .
+
+## You can play the game locally or change the code.  First you must run the commands
 
 make deps
 
-make index (or make index-en only for english version)
+make maze (or make make-en only for english version)
 
-make maze (or make maze-en only for english version)
+make turtle (or make turtle-en only for english version)
 
 on your cmd in the file directory in order to built your version.
 
@@ -19,7 +22,11 @@ wsl
 (to initiate linux subsystem on windows) on the file directory containing the
 game.
 
-Original games:
+## Sample
+**aMazeD with no help!**
+(https://mazenocomments.000webhostapp.com/index.html)
+
+## Original games:
 
 ![Blockly Games](https://raw.githubusercontent.com/wiki/google/blockly-games/title.png)
 
