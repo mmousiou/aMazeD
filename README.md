@@ -1,4 +1,5 @@
 <img src="/appengine/images/logo_amazed.png" width="200">
+
 # This is an educational game, based on Blockly Games maze and turtle. 
 *Version 1 --help provided in each level.*
 
