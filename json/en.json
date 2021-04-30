@@ -1,7 +1,7 @@
 {
 	"@metadata": {
 		"author": "Neil Fraser <fraser@google.com>",
-		"lastupdated": "2021-04-28 17:38:41.990990",
+		"lastupdated": "2021-04-30 09:42:26.524700",
 		"locale": "en",
 		"messagedocumentation" : "qqq"
 	},
@@ -152,13 +152,13 @@
 	"Turtle.helpUseLoop3": "Draw the shape with just three blocks.",
 	"Turtle.helpUseLoop4": "Draw the star with just four blocks.",
 	"Turtle.helpLevel71": "Try to turn in the same direction!",
-	"Turtle.helpLevel81": "Observe which part of the shape is drawed if we execute the blocks inside the repeat block one time. How many times should we execute the blocks in order to draw the requested rectangular?",
+	"Turtle.helpLevel81": "Observe which part of the shape is drawed if we execute the blocks one time. How many times should we execute the blocks in order to draw the requested rectangular?",
 	"Turtle.helpLevel91": "The angle of the equilateral triangle is 60. However in order to draw the shape we need the supplementary angle. You must think how many degrees is 180-60?",
 	"Turtle.helpLevel101": "The shape has four equilateral triangles. Think how many degrees you have to turn after each of the triangle is completed.",
 	"Turtle.helpText10Reddit": "Use the 'See Gallery' button to see what other people have drawn. If you draw something interesting, use the 'Submit to Gallery' button to publish it.",
 	"Turtle.helpToolbox": "Choose a category to see the blocks.",
 	"Turtle.helpLevel7": "Correct the blocks in order to draw a square with side 100 pixels.",
-	"Turtle.helpLevel8": "One of the blocks is wrong. Correct the blocks in order to draw a rectangular with height 50 and width 100.",
+	"Turtle.helpLevel8": "Fill in the code with the right blocks in order to draw a rectangular with height 50 and width 100.",
 	"Turtle.helpLevel9": "Correct the blocks in order to draw an equilateral triangle with side length of 50.",
 	"Turtle.helpLevel10": "Correct the blocks in order to draw the requasted shape.",
 	"Turtle.cat": "Movements"

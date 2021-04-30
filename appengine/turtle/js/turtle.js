@@ -259,9 +259,6 @@ Turtle.init = function() {
     //level 8
     var defaultXml8 =
         '<xml>' +
-        '<block type="turtle_repeat_internal" x="70" y="70">' +
-        '<field name="TIMES"> </field>' +
-        '<statement name="DO">' +
         '<block type="turtle_move_internal">' +
         '<field name="VALUE">50</field>' +
         '<next>' +
@@ -280,8 +277,6 @@ Turtle.init = function() {
         '</block>' + // τέλος 2oυ block     
         '</next>' +
         '</block>' + // τέλος πρώτου block 
-        '</statement>' +
-        '</block>' + // τέλος repeat
         '</xml>';
 
     //level 9
