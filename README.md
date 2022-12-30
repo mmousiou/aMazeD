@@ -28,10 +28,14 @@ have to run the command
 
 (to initiate linux subsystem on windows) on the file directory containing the game.
 
+## Upload aMazeD to a site
+To upload aMazeD game to a site you have to upload the contents of appengine file inside public_html directory of your web server.
+
 ## Sample
 **aMazeD with help!**
 
 > Demo Site: https://amazed-demo.000webhostapp.com
+
 > Demo video:
 <p align="left">
   <br />
