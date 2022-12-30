@@ -30,7 +30,7 @@ have to run the command
 
 ## Sample
 **aMazeD with help!**
-https://mazegamemm.000webhostapp.com/index.html
+https://amazed-demo.000webhostapp.com
 
 ## Original games:
 
