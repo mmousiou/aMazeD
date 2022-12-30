@@ -31,6 +31,12 @@ have to run the command
 ## Sample
 **aMazeD with help!**
 https://amazed-demo.000webhostapp.com
+<p align="left">
+  <br />
+  <a href="https://youtu.be/5eokUpBK83Y">
+    <img src="/amazed-demo-intro-pic.PNG" width="500px" alt="Demo" />
+  </a>
+</p>
 
 ## Original games:
 
